@@ -52,9 +52,6 @@ void UCameraShakeSelectorComponent::SelectCameraShake() const
 				CurrentMaxVelocity=RealisticRunningComponent->GetMaxRunSpeed();
 			}
 		}
-		//CurrentCameraShake->;
-
-		//UE_LOG(LogTemp, Display, TEXT("CameraShakeName: %s"), &CsName);
 	
 		if(CurrentMaxVelocity != 0)
 		{
@@ -65,11 +62,11 @@ void UCameraShakeSelectorComponent::SelectCameraShake() const
 		if(CurrentCameraShake != nullptr)
 		{
 			PlayerController->ClientStartCameraShake(
-			 CurrentCameraShake,
-			 CameraShakeIntensity,
-			 ECameraShakePlaySpace::CameraLocal,
-			 FRotator(0,0,0)
-		 );
+				CurrentCameraShake,
+				CameraShakeIntensity,
+				ECameraShakePlaySpace::CameraLocal,
+				FRotator(0,0,0)
+			);
 		}
 	}
 	
