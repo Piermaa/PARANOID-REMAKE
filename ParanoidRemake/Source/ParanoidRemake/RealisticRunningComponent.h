@@ -30,6 +30,8 @@ public:
 	void RunEndAction();
 	void Initialize();
 	void HandleMovementSpeed();
+	float GetMaxRunSpeed();
+	float GetMaxWalkSpeed();
 
 private:
 	class UCharacterMovementComponent* CharacterMovement;
@@ -63,6 +65,7 @@ private:
 	float RemainingStaminaInSeconds = 0;
 	bool bIsRunning = false;
 	bool bIsWaitingToRun = false;
+	bool InputPressed;
 
 	float FixedTime = 0.02f;
 

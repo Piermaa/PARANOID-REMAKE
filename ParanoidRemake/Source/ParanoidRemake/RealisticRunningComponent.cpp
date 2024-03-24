@@ -22,9 +22,32 @@ void URealisticRunningComponent::BeginPlay()
 
 void URealisticRunningComponent::HandleMovementSpeed()
 {
+	if (InputPressed)
+	{
+		if (!bIsWaitingToRun && !bIsRunning && HasEnoughStaminaToStartRunning())
+		{
+			bIsWaitingToRun = true;
+		}
+	}
+	else
+	{
+		bIsWaitingToRun = false;
+		bIsRunning = false;
+	}
+
 	HandleDelay();
     HandleStamina();
 	HandleAcceleration();
+}
+
+float URealisticRunningComponent::GetMaxRunSpeed()
+{
+	return  MaxRunSpeed;
+}
+
+float URealisticRunningComponent::GetMaxWalkSpeed()
+{
+	return MaxWalkSpeed;
 }
 
 void URealisticRunningComponent::HandleDelay()
@@ -32,14 +55,11 @@ void URealisticRunningComponent::HandleDelay()
 	if (bIsWaitingToRun)
 	{
 		StartRunningDelayTimer += FixedTime;
-		UE_LOG(LogTemp, Warning, TEXT("StartRunningDelayTimer: %f"), StartRunningDelayTimer);
 
 		if (HasEnoughStaminaToStartRunning())
 		{
 			if (StartRunningDelayTimer >= StartRunningDelay)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Run Started"));
-
 				bIsRunning = true;
 				bIsWaitingToRun = false;
 				StartRunningDelayTimer = 0;
@@ -59,7 +79,6 @@ void URealisticRunningComponent::HandleAcceleration()
 				MaxSpeedTransitionTimer += FixedTime;
 
 				CharacterMovement->MaxWalkSpeed = FMath::Lerp(MaxWalkSpeed, MaxRunSpeed, MaxSpeedTransitionTimer / MaxSpeedTransitionTime);;
-				UE_LOG(LogTemp, Display, TEXT("Runspeed: %f"), CharacterMovement->MaxWalkSpeed);
 			}
 		}
 	}
@@ -70,7 +89,6 @@ void URealisticRunningComponent::HandleAcceleration()
 			MaxSpeedTransitionTimer -= FixedTime * BrakingRatio;
 
 			CharacterMovement->MaxWalkSpeed = FMath::Lerp(MaxWalkSpeed, MaxRunSpeed, MaxSpeedTransitionTimer / MaxSpeedTransitionTime);;
-			UE_LOG(LogTemp, Warning, TEXT("Runspeed: %f"), CharacterMovement->MaxWalkSpeed);
 		}
 	}
 }
@@ -87,7 +105,8 @@ void URealisticRunningComponent::HandleStamina()
 
 		if (!HasEnoughStaminaToRun())
 		{
-			RunEndAction();
+			bIsRunning = false;
+			StartRunningDelayTimer = 0;
 			RemainingStaminaInSeconds = 0;
 		}
 	}
@@ -116,19 +135,12 @@ bool URealisticRunningComponent::HasEnoughStaminaToStartRunning()
 
 void URealisticRunningComponent::RunBeginAction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Run Begin"));
-
-	if (!bIsWaitingToRun && !bIsRunning)
-	{
-		bIsWaitingToRun=true;
-	}
+	InputPressed = true;
 }
 
 void URealisticRunningComponent::RunEndAction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("RunEnd"));
-	bIsRunning = false;
-	StartRunningDelayTimer = 0;
+	InputPressed = false;
 }
 
 void URealisticRunningComponent::Initialize()

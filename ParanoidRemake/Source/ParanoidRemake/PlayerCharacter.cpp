@@ -1,6 +1,8 @@
 
 
 #include "PlayerCharacter.h"
+
+#include "CameraShakeSelectorComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
@@ -19,6 +21,8 @@ APlayerCharacter::APlayerCharacter()
 	CameraComp->bUsePawnControlRotation = true;
 
 	RealisticRunningComponent = CreateDefaultSubobject<URealisticRunningComponent>(TEXT("Realistic Runnning"));
+
+	CameraShakeSelectorComponent = CreateDefaultSubobject<UCameraShakeSelectorComponent>(TEXT("Camera Shakes"));
 }
 
 void APlayerCharacter::BeginPlay()
@@ -26,7 +30,7 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	//Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if (const APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
@@ -35,7 +39,12 @@ void APlayerCharacter::BeginPlay()
 	}
 
 	RealisticRunningComponent->Initialize();
-
+	
+	CameraShakeSelectorComponent->SetCharacterMovementComponent
+		(GetCharacterMovement(),
+		GetController(),
+		RealisticRunningComponent
+	);
 	GetWorld()->GetTimerManager().SetTimer(FixedUpdateHandle, this, &APlayerCharacter::FixedTick, 0.02f, true);
 }
 
@@ -105,6 +114,7 @@ void APlayerCharacter::InteractAction()
 void APlayerCharacter::FixedTick()
 {
 	RealisticRunningComponent->HandleMovementSpeed();
+	CameraShakeSelectorComponent->SelectCameraShake();
 }
 
 bool APlayerCharacter::InteractableReached(FHitResult& OutHitResult)
