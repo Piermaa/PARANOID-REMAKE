@@ -65,7 +65,7 @@ private:
 	float RemainingStaminaInSeconds = 0;
 	bool bIsRunning = false;
 	bool bIsWaitingToRun = false;
-	bool InputPressed;
+	bool bInputPressed;
 
 	float FixedTime = 0.02f;
 

@@ -30,7 +30,7 @@ public:
 	void SelectCameraShake() const;
 
 public:
-	void SetCharacterMovementComponent(UCharacterMovementComponent* NewCharacterMovementComponent, 
+	void Initialize(UCharacterMovementComponent* NewCharacterMovementComponent, 
 		AController* Controller,
 		URealisticRunningComponent* NewRealisticRunningComponent);
 

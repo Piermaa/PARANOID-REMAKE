@@ -22,7 +22,7 @@ void URealisticRunningComponent::BeginPlay()
 
 void URealisticRunningComponent::HandleMovementSpeed()
 {
-	if (InputPressed)
+	if (bInputPressed)
 	{
 		if (!bIsWaitingToRun && !bIsRunning && HasEnoughStaminaToStartRunning())
 		{
@@ -135,12 +135,12 @@ bool URealisticRunningComponent::HasEnoughStaminaToStartRunning()
 
 void URealisticRunningComponent::RunBeginAction()
 {
-	InputPressed = true;
+	bInputPressed = true;
 }
 
 void URealisticRunningComponent::RunEndAction()
 {
-	InputPressed = false;
+	bInputPressed = false;
 }
 
 void URealisticRunningComponent::Initialize()

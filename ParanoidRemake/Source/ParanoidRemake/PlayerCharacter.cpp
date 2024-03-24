@@ -40,7 +40,7 @@ void APlayerCharacter::BeginPlay()
 
 	RealisticRunningComponent->Initialize();
 	
-	CameraShakeSelectorComponent->SetCharacterMovementComponent
+	CameraShakeSelectorComponent->Initialize
 		(GetCharacterMovement(),
 		GetController(),
 		RealisticRunningComponent

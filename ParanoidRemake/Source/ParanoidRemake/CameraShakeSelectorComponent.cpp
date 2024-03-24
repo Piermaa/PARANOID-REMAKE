@@ -72,7 +72,7 @@ void UCameraShakeSelectorComponent::SelectCameraShake() const
 	
 }
 
-void UCameraShakeSelectorComponent::SetCharacterMovementComponent(
+void UCameraShakeSelectorComponent::Initialize(
 	UCharacterMovementComponent* NewCharacterMovementComponent,
 	AController* Controller,
 	URealisticRunningComponent* NewRealisticRunningComponent)
