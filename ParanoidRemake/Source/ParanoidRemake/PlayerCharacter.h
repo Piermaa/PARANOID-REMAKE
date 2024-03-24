@@ -67,6 +67,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	class URealisticRunningComponent* RealisticRunningComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CameraShake", meta = (AllowPrivateAccess = "true"))
+	class UCameraShakeSelectorComponent* CameraShakeSelectorComponent;
+	
 	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	float InteractionDistance = 400.0f;
 	
