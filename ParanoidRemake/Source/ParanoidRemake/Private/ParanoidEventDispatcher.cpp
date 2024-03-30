@@ -2,6 +2,7 @@
 
 #include "ParanoidEventDispatcher.h"
 #include "ParanoidEvent.h"
+#include "ParanoidEventInterface.h"
 
 // Sets default values
 AParanoidEventDispatcher::AParanoidEventDispatcher()
@@ -14,7 +15,13 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 {
 	for (auto ParanoidEvent : ParanoidEvents)
 	{
-		ParanoidEvent->InvokeEvent();
+		if(ParanoidEvent != nullptr)
+		{
+			if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+			{
+				ParanoidEvent->InvokeEvent();
+			}
+		}
 	}
 }
 
