@@ -11,6 +11,7 @@
 #include "InteractableInterface.h"
 #include "DrawDebugHelpers.h"
 #include "RealisticRunningComponent.h"
+#include "DirectedInteractableInterface.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -104,9 +105,14 @@ void APlayerCharacter::InteractAction()
 	if (InteractableReached(HitResult))
 	{
 		AActor* HitActor = HitResult.GetActor();
-		if (HitActor->GetClass()->ImplementsInterface(UInteractableInterface::StaticClass()))
+		UClass* ActorClass= HitActor->GetClass();
+		if (ActorClass->ImplementsInterface(UInteractableInterface::StaticClass()))
 		{
 			IInteractableInterface::Execute_Interact(HitActor);
+		}
+		if(ActorClass->ImplementsInterface(UDirectedInteractableInterface::StaticClass()))
+		{
+			IDirectedInteractableInterface::Execute_DirectionDependantInteract(HitActor, CameraComp->GetForwardVector());
 		}
 	}
 }
