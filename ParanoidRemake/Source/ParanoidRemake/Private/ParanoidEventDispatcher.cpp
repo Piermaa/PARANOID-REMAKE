@@ -19,7 +19,7 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 		{
 			if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
 			{
-				ParanoidEvent->InvokeEvent();
+				ParanoidEvent->TryInvokeEvent();
 			}
 		}
 	}

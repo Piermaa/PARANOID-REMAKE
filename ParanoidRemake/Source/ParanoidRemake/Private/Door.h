@@ -3,12 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ParanoidEventDispatcher.h"
 #include "GameFramework/Actor.h"
 #include "ParanoidRemake/DirectedInteractableInterface.h"
 #include "Door.generated.h"
 
 UCLASS()
-class ADoor : public AActor, public IDirectedInteractableInterface
+class ADoor : public AParanoidEventDispatcher, public IDirectedInteractableInterface
 {
 	GENERATED_BODY()
 	

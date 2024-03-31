@@ -65,6 +65,7 @@ void ADoor::DirectionDependantInteract_Implementation(FVector Forward)
 
 void ADoor::ToggleDoor(FVector ForwardVector)
 {
+	DispatchParanoidEvents();
 	
 	DotP = FVector::DotProduct(BoxComp->GetForwardVector(), ForwardVector);
 

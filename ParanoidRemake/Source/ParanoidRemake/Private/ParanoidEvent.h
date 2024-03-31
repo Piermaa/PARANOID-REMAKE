@@ -16,6 +16,14 @@ public:
 	// Sets default values for this actor's properties
 	AParanoidEvent();
 
+	UPROPERTY(EditAnywhere, Category = "Paranoid Event")
+	bool InvokeOnce;
+
+	bool Invoked=false;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Paranoid Event") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
+	void TryInvokeEvent();
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Paranoid Event") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
 	void InvokeEvent();
 };
