@@ -15,9 +15,13 @@ public:
 	// Sets default values for this actor's properties
 	AParanoidEventDispatcher();
 
+	
 	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
 	TArray<class AParanoidEvent*> ParanoidEvents;
 
+	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
+	TArray<FName> ParanoidEventsNames;
+	
 	UFUNCTION(BlueprintCallable)
 	void DispatchParanoidEvents();
 };
