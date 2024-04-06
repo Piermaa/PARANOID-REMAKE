@@ -12,6 +12,7 @@
 #include "DrawDebugHelpers.h"
 #include "RealisticRunningComponent.h"
 #include "DirectedInteractableInterface.h"
+#include "FootstepsPlayer.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -24,6 +25,7 @@ APlayerCharacter::APlayerCharacter()
 	RealisticRunningComponent = CreateDefaultSubobject<URealisticRunningComponent>(TEXT("Realistic Runnning"));
 
 	CameraShakeSelectorComponent = CreateDefaultSubobject<UCameraShakeSelectorComponent>(TEXT("Camera Shakes"));
+	Footsteps = CreateDefaultSubobject<UFootstepsPlayer>(TEXT("FootstepsPlayer"));
 }
 
 void APlayerCharacter::BeginPlay()
@@ -121,6 +123,7 @@ void APlayerCharacter::FixedTick()
 {
 	RealisticRunningComponent->HandleMovementSpeed();
 	CameraShakeSelectorComponent->SelectCameraShake();
+	Footsteps->HandleFootsteps();
 }
 
 bool APlayerCharacter::InteractableReached(FHitResult& OutHitResult)

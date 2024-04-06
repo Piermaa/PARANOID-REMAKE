@@ -133,6 +133,11 @@ bool URealisticRunningComponent::HasEnoughStaminaToStartRunning()
 	return RemainingStaminaInSeconds / MaxStaminaInSeconds >= MinimalRemainingStaminaPercentageToStartRunning;
 }
 
+bool URealisticRunningComponent::ReachedRunningSpeed()
+{
+	return FMath::IsNearlyEqual(CharacterMovement->MaxWalkSpeed, MaxRunSpeed, 50) ; 
+}
+
 void URealisticRunningComponent::RunBeginAction()
 {
 	bInputPressed = true;

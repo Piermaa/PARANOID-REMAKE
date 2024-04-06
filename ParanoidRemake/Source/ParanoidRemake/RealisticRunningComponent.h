@@ -32,7 +32,8 @@ public:
 	void HandleMovementSpeed();
 	float GetMaxRunSpeed();
 	float GetMaxWalkSpeed();
-
+	bool ReachedRunningSpeed();
+	
 private:
 	class UCharacterMovementComponent* CharacterMovement;
 
