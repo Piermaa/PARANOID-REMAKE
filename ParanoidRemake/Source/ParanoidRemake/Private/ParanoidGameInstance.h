@@ -18,5 +18,6 @@ class UParanoidGameInstance : public UGameInstance
 	
 public:
 	FParanoidEventDelegate OnParanoidEvent;
+	UFUNCTION(BlueprintCallable)
 	void CallEvents(FName EventName);
 };

@@ -18,7 +18,7 @@ AParanoidEvent::AParanoidEvent()
 	TextRenderComponent = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderComponent"));
 	TextRenderComponent->SetupAttachment(RootComponent);
 	TextRenderComponent->SetHiddenInGame(true);
-	//TextRenderComponent->SetRelativeLocation(FVector(0,0,50));
+	TextRenderComponent->SetRelativeLocation(FVector(0,0,100));
 	TextRenderComponent->SetTextRenderColor(FColor::Green);
 
 }
@@ -41,7 +41,7 @@ void AParanoidEvent::OnConstruction(const FTransform& Transform)
 	Super::OnConstruction(Transform);
 	TextRenderComponent->Text=FText::FromName(ParanoidEventName);
 	TextRenderComponent->SetVisibility(ShowDebugElements);
-	
+	BillboardComponent->SetVisibility(ShowDebugElements);
 //	StaticMeshComponent->SetVisibility(ShowDebugElements);
 }
 
