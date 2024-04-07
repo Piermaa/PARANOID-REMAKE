@@ -17,7 +17,19 @@ public:
 	AParanoidEvent();
 
 	virtual void BeginPlay() override;
-	virtual void BeginDestroy() override;
+	virtual void OnConstruction(const FTransform& Transform) override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debugging")
+	bool ShowDebugElements;
+
+	UPROPERTY(EditAnywhere="Debugging")
+	UBillboardComponent* BillboardComponent;
+	
+	UPROPERTY(EditAnywhere="Debugging")
+	 UStaticMeshComponent* StaticMeshComponent;
+
+	UPROPERTY(VisibleDefaultsOnly, Category="Debugging")
+	class UTextRenderComponent* TextRenderComponent;
 	
 	UPROPERTY(EditAnywhere, Category = "Paranoid Event")
 	FName ParanoidEventName;
@@ -27,6 +39,9 @@ public:
 
 	bool Invoked=false;
 
+	UFUNCTION(BlueprintCallable, CallInEditor, BlueprintNativeEvent)
+	void UpdateDebugSymbols();
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Paranoid Event") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
 	void TryInvokeEvent();
 	

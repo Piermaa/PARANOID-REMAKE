@@ -16,7 +16,6 @@ ADoor::ADoor()
 	BoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("My Box Component"));
 	BoxComp->InitBoxExtent(FVector(150, 100, 100));
 	BoxComp->SetCollisionProfileName("Trigger");
-	RootComponent = BoxComp;
 
 
 	ArrowComp = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
@@ -28,7 +27,6 @@ ADoor::ADoor()
 	Door->SetupAttachment(ArrowComp);
 
 
-//	Door->SetRelativeLocation(FVector(0.0f, 50.0f, -100.0f));
 	Door->SetWorldScale3D(FVector(1.f));
 }
 

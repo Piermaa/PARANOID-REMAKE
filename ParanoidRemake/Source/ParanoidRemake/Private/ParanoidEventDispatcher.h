@@ -14,7 +14,22 @@ class AParanoidEventDispatcher : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AParanoidEventDispatcher();
+	virtual void OnConstruction(const FTransform& Transform) override;
+	
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	bool ShowDebugElements = true;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = "Debug")
+	class UTextRenderComponent* TextRenderComponent;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Debug")
+	USceneComponent* Root;
+	
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	FColor DebugLinesColor;
+
+	UFUNCTION(BlueprintCallable, CallInEditor, BlueprintNativeEvent)
+	void UpdateDebugSymbols();
 	
 	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
 	TArray<class AParanoidEvent*> ParanoidEvents;

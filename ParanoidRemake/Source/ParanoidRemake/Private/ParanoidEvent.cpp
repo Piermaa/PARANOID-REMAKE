@@ -1,10 +1,25 @@
 #include "ParanoidEvent.h"
-
+#include "Components/StaticMeshComponent.h"
 #include "ParanoidGameInstance.h"
-
+#include "Components/TextRenderComponent.h"
+#include "Components/BillboardComponent.h"
 AParanoidEvent::AParanoidEvent()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	
+	// StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SM"));
+	// //RootComponent=StaticMeshComponent;
+	// StaticMeshComponent->SetHiddenInGame(true);
+	// StaticMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	// StaticMeshComponent->SetGenerateOverlapEvents(false);
+	//StaticMeshComponent->SetRelativeLocation(FVector(0,0,0));
+	BillboardComponent = CreateDefaultSubobject<UBillboardComponent>(TEXT("SM"));
+	RootComponent = BillboardComponent;
+	TextRenderComponent = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderComponent"));
+	TextRenderComponent->SetupAttachment(StaticMeshComponent);
+	TextRenderComponent->SetHiddenInGame(true);
+	//TextRenderComponent->SetRelativeLocation(FVector(0,0,50));
+	TextRenderComponent->SetTextRenderColor(FColor::Green);
 
 }
 
@@ -19,10 +34,20 @@ void AParanoidEvent::BeginPlay()
 	}
 }
 
-void AParanoidEvent::BeginDestroy()
+
+
+void AParanoidEvent::OnConstruction(const FTransform& Transform)
 {
-	Super::BeginDestroy();
+	Super::OnConstruction(Transform);
+	TextRenderComponent->Text=FText::FromName(ParanoidEventName);
+	TextRenderComponent->SetVisibility(ShowDebugElements);
 	
+//	StaticMeshComponent->SetVisibility(ShowDebugElements);
+}
+
+
+void AParanoidEvent::UpdateDebugSymbols_Implementation()
+{
 }
 
 void AParanoidEvent::InvokeEventByName(FName EventName)
