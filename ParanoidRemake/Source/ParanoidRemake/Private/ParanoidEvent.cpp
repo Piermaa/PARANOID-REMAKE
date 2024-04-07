@@ -16,7 +16,7 @@ AParanoidEvent::AParanoidEvent()
 	BillboardComponent = CreateDefaultSubobject<UBillboardComponent>(TEXT("SM"));
 	RootComponent = BillboardComponent;
 	TextRenderComponent = CreateDefaultSubobject<UTextRenderComponent>(TEXT("TextRenderComponent"));
-	TextRenderComponent->SetupAttachment(StaticMeshComponent);
+	TextRenderComponent->SetupAttachment(RootComponent);
 	TextRenderComponent->SetHiddenInGame(true);
 	//TextRenderComponent->SetRelativeLocation(FVector(0,0,50));
 	TextRenderComponent->SetTextRenderColor(FColor::Green);
