@@ -32,6 +32,7 @@ public:
 	void HandleMovementSpeed();
 	float GetMaxRunSpeed();
 	float GetMaxWalkSpeed();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ReachedRunningSpeed();
 	
 private:
