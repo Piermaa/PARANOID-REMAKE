@@ -23,10 +23,10 @@ public:
 	bool ShowDebugElements;
 
 	UPROPERTY(EditAnywhere="Debugging")
-	UBillboardComponent* BillboardComponent;
+	class UBillboardComponent* BillboardComponent;
 	
 	UPROPERTY(EditAnywhere="Debugging")
-	 UStaticMeshComponent* StaticMeshComponent;
+	UStaticMeshComponent* StaticMeshComponent;
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Debugging")
 	class UTextRenderComponent* TextRenderComponent;
