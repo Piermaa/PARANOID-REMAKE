@@ -1,10 +1,12 @@
 
 #include "ParanoidEventDispatcher.h"
+#include "KeyHolderActor.h"
 #include "ParanoidEvent.h"
 #include "ParanoidEventInterface.h"
 #include "ParanoidGameInstance.h"
-#include "VectorTypes.h"
 #include "Components/TextRenderComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 // Sets default values
 AParanoidEventDispatcher::AParanoidEventDispatcher()
 {
@@ -58,22 +60,61 @@ void AParanoidEventDispatcher::UpdateDebugSymbols_Implementation()
 void AParanoidEventDispatcher::DispatchParanoidEvents()
 {
 	UParanoidGameInstance* GameInstance = Cast<UParanoidGameInstance>(GetGameInstance());
-	
-	for (auto ParanoidEvent : ParanoidEvents)
+
+	if(CheckKeys())
 	{
-		if(ParanoidEvent != nullptr)
+		for (auto ParanoidEvent : ParanoidEvents)
 		{
-			if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+			if(ParanoidEvent != nullptr)
 			{
-				ParanoidEvent->TryInvokeEvent();
+				if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+				{
+					ParanoidEvent->TryInvokeEvent();
+				}
 			}
 		}
-	}
 
-	for (auto EventName : ParanoidEventsNames)
-	{
-		GameInstance->CallEvents(EventName);
+		for (auto EventName : ParanoidEventsNames)
+		{
+			GameInstance->CallEvents(EventName);
+		}
+		
+		UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		
+		for (auto KeyToUnlock : KeysToUnlock)
+		{
+			IKeyHolderActor::Execute_AddKeyToActor(PlayerCharacter, KeyToUnlock);	
+		}
 	}
+}
+
+bool AParanoidEventDispatcher::CheckKeys()
+{
+	UE_LOG(LogTemp, Warning,TEXT("Checking KeysRequired in Paranoid Event Dispacher:"));
+
+	FString KeysLen= FString::FromInt(KeysRequired.Max());
+	UE_LOG(LogTemp, Error,TEXT("Keys required amount: %s"), *KeysLen);
+	if(KeysRequired.Max()==0)
+	{
+		return true;
+	}
+	
+	UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	const bool HasKeys = IKeyHolderActor::Execute_ActorHasKeys(PlayerCharacter, KeysRequired);
+	FString Has= HasKeys ? "Has" : "Has Not";
+	UE_LOG(LogTemp, Error,TEXT("Has keys: %s"), *Has);
+	return HasKeys;
+}
+
+void AParanoidEventDispatcher::KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse)
+{
+	KeysRequiredToUse = KeysRequired;
+}
+
+
+TArray<FName> AParanoidEventDispatcher::KeysToUnlock_Implementation()
+{
+	return KeysToUnlock;
 }
 
 

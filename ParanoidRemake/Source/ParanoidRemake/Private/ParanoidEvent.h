@@ -36,10 +36,12 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "Paranoid Event")
 	bool InvokeOnce;
-
+	UPROPERTY(EditAnywhere, Category = "Paranoid Event | Keys")
+	TArray<FName> KeysRequired;
+	
 	bool Invoked=false;
 
-	UFUNCTION(BlueprintCallable, CallInEditor, BlueprintNativeEvent)
+	UFUNCTION(BlueprintCallable, CallInEditor, BlueprintNativeEvent, Category="Debugging")
 	void UpdateDebugSymbols();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Paranoid Event") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
@@ -50,4 +52,6 @@ public:
 
 	UFUNCTION(Blueprintable)
 	void InvokeEventByName(FName EventName);
+
+	bool CheckForKeys();
 };

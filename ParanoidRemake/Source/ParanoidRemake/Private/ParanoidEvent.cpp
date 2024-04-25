@@ -1,8 +1,13 @@
 #include "ParanoidEvent.h"
+
+#include "KeyHolderActor.h"
 #include "Components/StaticMeshComponent.h"
 #include "ParanoidGameInstance.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/BillboardComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
+
 AParanoidEvent::AParanoidEvent()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -58,19 +63,32 @@ void AParanoidEvent::InvokeEventByName(FName EventName)
 	}
 }
 
+bool AParanoidEvent::CheckForKeys()
+{
+	if(UGameplayStatics::GetPlayerCharacter(GetWorld(),0)->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+	{
+		return IKeyHolderActor::Execute_ActorHasKeys(UGameplayStatics::GetPlayerCharacter(GetWorld() ,0), KeysRequired);
+	}
+	return false;
+	
+}
+
 void AParanoidEvent::TryInvokeEvent_Implementation()
 {
-	if(InvokeOnce)
+	if(CheckForKeys())
 	{
-		if(!Invoked)
+		if(InvokeOnce)
+		{
+			if(!Invoked)
+			{
+				InvokeEvent();
+				Invoked = true;
+			}
+		}
+		else
 		{
 			InvokeEvent();
-			Invoked = true;
 		}
-	}
-	else
-	{
-		InvokeEvent();
 	}
 }
 

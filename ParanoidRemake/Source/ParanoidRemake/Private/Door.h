@@ -63,13 +63,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Door | Mesh", meta = (AllowPrivateAccess = "true"))
 	bool bInvertedMesh;
 
-	UPROPERTY(VisibleAnywhere, Category = "Debug", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 	bool bOpening = false;
 
-	UPROPERTY(VisibleAnywhere, Category = "Debug", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 	bool bClosing = false;
 
-	UPROPERTY(VisibleAnywhere, Category = "Debug", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Debug", meta = (AllowPrivateAccess = "true"))
 	bool bIsClosed = true;
 
 	float DotP;

@@ -13,6 +13,11 @@
 #include "RealisticRunningComponent.h"
 #include "DirectedInteractableInterface.h"
 #include "FootstepsPlayer.h"
+#include "ItemHolderComponent.h"
+#include "KeyHolderComponent.h"
+#include "KeyLockedActorInterface.h"
+#include "KeyUnlockerActor.h"
+#include "PickupeableInterface.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -26,6 +31,11 @@ APlayerCharacter::APlayerCharacter()
 
 	CameraShakeSelectorComponent = CreateDefaultSubobject<UCameraShakeSelectorComponent>(TEXT("Camera Shakes"));
 	Footsteps = CreateDefaultSubobject<UFootstepsPlayer>(TEXT("FootstepsPlayer"));
+
+	KeyHolderComponent = CreateDefaultSubobject<UKeyHolderComponent>(TEXT("Key Holder"));
+
+	ItemHolderComponent = CreateDefaultSubobject<UItemHolderComponent>(TEXT("ItemHolder"));
+	ItemHolderComponent->SetupAttachment(CameraComp);
 }
 
 void APlayerCharacter::BeginPlay()
@@ -108,14 +118,41 @@ void APlayerCharacter::InteractAction()
 	{
 		AActor* HitActor = HitResult.GetActor();
 		UClass* ActorClass= HitActor->GetClass();
-		if (ActorClass->ImplementsInterface(UInteractableInterface::StaticClass()))
+
+		// Chequeo que no esté lockeado
+		UE_LOG(LogTemp,Warning, TEXT("Checkeo si esta bloqueado"))
+		if(ActorClass->ImplementsInterface(UKeyLockedActorInterface::StaticClass()))
 		{
-			IInteractableInterface::Execute_Interact(HitActor);
+			UE_LOG(LogTemp,Error, TEXT("Esta bloqueado"))
+			TArray<FName> KeysRequired = TArray<FName>();
+			IKeyLockedActorInterface::Execute_KeysRequiredToUse(HitActor, KeysRequired);
+			
+			if(!Execute_ActorHasKeys(this, KeysRequired))
+			{
+				return;
+			}
 		}
+		UE_LOG(LogTemp,Warning, TEXT("Checkeo si es interactuable direccional"))
 		if(ActorClass->ImplementsInterface(UDirectedInteractableInterface::StaticClass()))
 		{
 			IDirectedInteractableInterface::Execute_DirectionDependantInteract(HitActor, CameraComp->GetForwardVector());
+			UE_LOG(LogTemp,Error, TEXT("Es ii"))
 		}
+		UE_LOG(LogTemp,Warning, TEXT("Checkeo si es interactuable"))
+		// Si es interactuable:
+		if (ActorClass->ImplementsInterface(UInteractableInterface::StaticClass()))
+		{
+			IInteractableInterface::Execute_Interact(HitActor);
+
+			// Si se puede agarrar
+			if(ActorClass->ImplementsInterface(UPickupeableInterface::StaticClass()))
+			{
+				TArray<UMaterialInterface*> PickupeableMaterials = TArray<UMaterialInterface*>();
+				UStaticMesh* PickupeableMesh = IPickupeableInterface::Execute_Pickup(HitActor, PickupeableMaterials);
+				ItemHolderComponent->AddHeldItem(PickupeableMesh, PickupeableMaterials);	
+			}
+		}
+		
 	}
 }
 
@@ -124,6 +161,46 @@ void APlayerCharacter::FixedTick()
 	RealisticRunningComponent->HandleMovementSpeed();
 	CameraShakeSelectorComponent->SelectCameraShake();
 	Footsteps->HandleFootsteps();
+}
+
+TSet<FName> APlayerCharacter::GetKeysFromActor_Implementation()
+{
+	if(KeyHolderComponent!=nullptr)
+	{
+		return KeyHolderComponent->GetHeldKeys();
+	}
+	else
+	{
+		return TSet<FName>();
+	}
+}
+
+void APlayerCharacter::AddKeyToActor_Implementation(FName NewKey)
+{
+	if(KeyHolderComponent!=nullptr)
+	{
+		KeyHolderComponent->AddKey(NewKey);
+	}
+}
+
+void APlayerCharacter::ConsumeKeysFromActor_Implementation(const TArray<FName>& KeysToConsume)
+{
+	if(KeyHolderComponent!=nullptr)
+	{
+		return KeyHolderComponent->ConsumeKeys(KeysToConsume);
+	}
+}
+
+bool APlayerCharacter::ActorHasKeys_Implementation(const TArray<FName>& KeysToCheck)
+{
+	if(KeyHolderComponent!=nullptr)
+	{
+		return KeyHolderComponent->HasKeys(KeysToCheck);
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool APlayerCharacter::InteractableReached(FHitResult& OutHitResult)

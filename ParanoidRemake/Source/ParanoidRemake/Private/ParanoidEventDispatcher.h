@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "KeyLockedActorInterface.h"
+#include "KeyUnlockerActor.h"
 #include "GameFramework/Actor.h"
 #include "ParanoidEventDispatcher.generated.h"
 
 UCLASS()
-class AParanoidEventDispatcher : public AActor
+class AParanoidEventDispatcher : public AActor, public IKeyLockedActorInterface, public IKeyUnlockerActor
 {
 	GENERATED_BODY()
 	
@@ -36,7 +38,22 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
 	TArray<FName> ParanoidEventsNames;
+
+	UPROPERTY(EditAnywhere, Category = "Keys")
+	TArray<FName> KeysRequired = TArray<FName>();;
+	
+	UPROPERTY(EditAnywhere, Category = "Keys")
+	TArray<FName> KeysToUnlock = TArray<FName>();
 	
 	UFUNCTION(BlueprintCallable)
 	void DispatchParanoidEvents();
+
+	UFUNCTION(BlueprintCallable)
+	bool CheckKeys();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse) override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual TArray<FName> KeysToUnlock_Implementation() override;
 };

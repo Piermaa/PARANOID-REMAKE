@@ -5,9 +5,12 @@
 #include "GameFramework/Character.h"
 #include "InputAction.h"
 #include "InputActionValue.h"
+#include "KeyHolderActor.h"
 #include "PlayerCharacter.generated.h"
+class UInputMappingContext;
+
 UCLASS()
-class PARANOIDREMAKE_API APlayerCharacter : public ACharacter
+class PARANOIDREMAKE_API APlayerCharacter : public ACharacter, public IKeyHolderActor
 {
 	GENERATED_BODY()
 
@@ -61,9 +64,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enhanced Input")
 	UInputAction* RunInput;
 
-
-
+	virtual TSet<FName> GetKeysFromActor_Implementation() override;
+	virtual void AddKeyToActor_Implementation(FName NewKey) override;
+	virtual void ConsumeKeysFromActor_Implementation(const TArray<FName>& KeysToConsume) override;
+	virtual bool ActorHasKeys_Implementation(const TArray<FName>& KeysToCheck) override;
 private:
+
+	// ##################
+	// ### COMPONENTS ###
+	// ##################
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	class URealisticRunningComponent* RealisticRunningComponent;
 
@@ -72,15 +82,27 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CameraShake", meta = (AllowPrivateAccess = "true"))
 	class UCameraShakeSelectorComponent* CameraShakeSelectorComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Keys", meta = (AllowPrivateAccess = "true"))
+	class  UKeyHolderComponent* KeyHolderComponent;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items", meta = (AllowPrivateAccess = "true"))
+	class UItemHolderComponent* ItemHolderComponent;
+
+	
+	// ## Other ##
 	
 	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	float InteractionDistance = 400.0f;
+
 	
 	FTimerHandle FixedUpdateHandle;
 
-	//###############
-	//###Functions###
-	//###############
+	// #################
+	// ### Functions ###
+	// #################
 
 	bool InteractableReached(FHitResult& OutHitResult);
+
+	
 };
