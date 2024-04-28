@@ -43,7 +43,7 @@ protected:
 	/** Called for looking input */
 	void LookAction(const FInputActionValue& Value);
 
-	void InteractAction();
+	//void InteractAction();
 	
 	void FixedTick();
 
@@ -89,20 +89,16 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items", meta = (AllowPrivateAccess = "true"))
 	class UItemHolderComponent* ItemHolderComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items", meta = (AllowPrivateAccess = "true"))
+	class UInteractComponent* InteractComponent;
 	
 	// ## Other ##
 	
-	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
-	float InteractionDistance = 400.0f;
 
-	
 	FTimerHandle FixedUpdateHandle;
 
 	// #################
 	// ### Functions ###
 	// #################
 
-	bool InteractableReached(FHitResult& OutHitResult);
-
-	
 };

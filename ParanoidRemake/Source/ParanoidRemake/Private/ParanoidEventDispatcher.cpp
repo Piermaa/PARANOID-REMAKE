@@ -63,6 +63,12 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 
 	if(CheckKeys())
 	{
+		if(ConsumeKeys)
+		{
+			UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			IKeyHolderActor::Execute_ConsumeKeysFromActor(PlayerCharacter, KeysRequired);
+		}
+		
 		for (auto ParanoidEvent : ParanoidEvents)
 		{
 			if(ParanoidEvent != nullptr)

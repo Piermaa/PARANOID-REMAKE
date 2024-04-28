@@ -1,65 +1,70 @@
+﻿// Fill out your copyright notice in the Description page of Project Settings.
+
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
 #include "KeyLockedActorInterface.h"
 #include "KeyUnlockerActor.h"
-#include "GameFramework/Actor.h"
-#include "ParanoidEventDispatcher.generated.h"
+#include "FParanoidEventsBatch.h"
+#include "BatchedParanoidEventDispatcher.generated.h"
+
+
 
 UCLASS()
-class AParanoidEventDispatcher : public AActor, public IKeyLockedActorInterface, public IKeyUnlockerActor
+class PARANOIDREMAKE_API ABatchedParanoidEventDispatcher : public AActor, public IKeyLockedActorInterface, public IKeyUnlockerActor
 {
 	GENERATED_BODY()
-	
+
 public:
-	///////////////// UE5 //////////////////
-	AParanoidEventDispatcher();
-	virtual void OnConstruction(const FTransform& Transform) override;
-	
+	ABatchedParanoidEventDispatcher();
+
 	////////////////////////////////////////////
 	////////////// UPROPERTIES ////////////////
 	///////////////////////////////////////////
 
 	///////////////// DEBUG //////////////////
+	virtual void OnConstruction(const FTransform& Transform) override;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category ="ParanoidEvents")
+	void OnChangeState();
+	
 	UPROPERTY(EditAnywhere, Category = "Debug")
 	bool ShowDebugElements = true;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "Debug")
 	class UTextRenderComponent* TextRenderComponent;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "Debug")
 	USceneComponent* Root;
+	
 	UPROPERTY(EditAnywhere, Category = "Debug")
 	FColor DebugLinesColor;
 
-	///////////////// Paranoid //////////////////
-	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
-	TArray<class AParanoidEvent*> ParanoidEvents;
-	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
-	TArray<FName> ParanoidEventsNames;
+	UFUNCTION(BlueprintCallable, CallInEditor, BlueprintNativeEvent)
+	void UpdateDebugSymbols();
 
-	//////////// Keys Interface //////////////
 	UPROPERTY(EditAnywhere, Category = "Keys")
-	TArray<FName> KeysRequired = TArray<FName>();
-	UPROPERTY(EditAnywhere, Category = "Keys")
-	bool ConsumeKeys = true;
+	TArray<FName> KeysRequired = TArray<FName>();;
+	
 	UPROPERTY(EditAnywhere, Category = "Keys")
 	TArray<FName> KeysToUnlock = TArray<FName>();
-
-	////////////////////////////////////////////
-	/////////////// UFUNCTION /////////////////
-	///////////////////////////////////////////
 	
 	UFUNCTION(BlueprintCallable)
 	void DispatchParanoidEvents();
+
 	UFUNCTION(BlueprintCallable)
 	bool CheckKeys();
 
-	//////////// Keys Interface //////////////
 	UFUNCTION(BlueprintCallable)
 	virtual void KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse) override;
+
 	UFUNCTION(BlueprintCallable)
 	virtual TArray<FName> KeysToUnlock_Implementation() override;
 
-	////////// Debug /////////////////////
-	UFUNCTION(BlueprintCallable, CallInEditor, BlueprintNativeEvent)
-	void UpdateDebugSymbols();
+private:
+	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+	TArray<FParanoidEventsBatch> ParanoidEventsBatches = TArray<FParanoidEventsBatch>();
+
+	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess=true))
+	int ParanoidEventsIndex;
 };
