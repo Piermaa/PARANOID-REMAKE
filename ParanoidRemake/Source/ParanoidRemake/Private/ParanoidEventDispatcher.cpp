@@ -63,10 +63,14 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 
 	if(CheckKeys())
 	{
-		if(ConsumeKeys)
+		UObject* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+
+		if(PlayerCharacter != nullptr && PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 		{
-			UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			IKeyHolderActor::Execute_ConsumeKeysFromActor(PlayerCharacter, KeysRequired);
+			if(ConsumeKeys)
+			{
+				IKeyHolderActor::Execute_ConsumeKeysFromActor(PlayerCharacter, KeysRequired);
+			}
 		}
 		
 		for (auto ParanoidEvent : ParanoidEvents)
@@ -85,16 +89,13 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 			GameInstance->CallEvents(EventName);
 		}
 		
-		UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
-		if(PlayerCharacter-GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+		if(PlayerCharacter != nullptr && PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 		{
 			for (auto KeyToUnlock : KeysToUnlock)
 			{
 				IKeyHolderActor::Execute_AddKeyToActor(PlayerCharacter, KeyToUnlock);	
 			}
 		}
-	
 	}
 }
 
@@ -110,9 +111,9 @@ bool AParanoidEventDispatcher::CheckKeys()
 	}
 
 	//Obtener al player character
-	UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	UObject* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	// Veo si tiene el componente de llaves
-	if(!PlayerCharacter-GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+	if(PlayerCharacter != nullptr && !PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
 		return true;
 	}

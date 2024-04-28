@@ -65,7 +65,8 @@ void AParanoidEvent::InvokeEventByName(FName EventName)
 
 bool AParanoidEvent::CheckForKeys()
 {
-	if(UGameplayStatics::GetPlayerCharacter(GetWorld(),0)->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+	UObject* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
+	if(Player != nullptr && Player->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
 		return IKeyHolderActor::Execute_ActorHasKeys(UGameplayStatics::GetPlayerCharacter(GetWorld() ,0), KeysRequired);
 	}
