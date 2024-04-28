@@ -15,9 +15,14 @@ class PARANOIDREMAKE_API UKeyHolderComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UKeyHolderComponent();
+	
+	UFUNCTION(BlueprintPure)
 	bool HasKeys(TArray<FName> Keys);
+	UFUNCTION(BlueprintPure)
 	TSet<FName> GetHeldKeys();
+	UFUNCTION(BlueprintCallable)
 	void AddKey(FName NewKey);
+	UFUNCTION(BlueprintCallable)
 	void ConsumeKeys(TArray<FName> ConsumedKeys);
 
 private:

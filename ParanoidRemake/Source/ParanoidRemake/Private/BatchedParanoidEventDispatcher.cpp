@@ -99,9 +99,12 @@ void ABatchedParanoidEventDispatcher::DispatchParanoidEvents()
 		
 			UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		
-			for (auto KeyToUnlock : KeysToUnlock)
+			if(PlayerCharacter-GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 			{
-				IKeyHolderActor::Execute_AddKeyToActor(PlayerCharacter, KeyToUnlock);	
+				for (auto KeyToUnlock : KeysToUnlock)
+				{
+					IKeyHolderActor::Execute_AddKeyToActor(PlayerCharacter, KeyToUnlock);	
+				}
 			}
 		}
 		OnChangeState();
@@ -121,6 +124,12 @@ bool ABatchedParanoidEventDispatcher::CheckKeys()
 	}
 	
 	UObject* PlayerCharacter = Cast<ACharacter>( UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	if(!PlayerCharacter-GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+	{
+		return true;
+	}
+
 	const bool HasKeys = IKeyHolderActor::Execute_ActorHasKeys(PlayerCharacter, KeysRequired);
 	FString Has= HasKeys ? "Has" : "Has Not";
 	UE_LOG(LogTemp, Error,TEXT("Has keys: %s"), *Has);
