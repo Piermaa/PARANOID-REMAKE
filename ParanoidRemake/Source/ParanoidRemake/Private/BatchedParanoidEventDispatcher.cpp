@@ -73,67 +73,55 @@ void ABatchedParanoidEventDispatcher::DispatchParanoidEvents()
 {
 	UParanoidGameInstance* GameInstance = Cast<UParanoidGameInstance>(GetGameInstance());
 
-	if(CheckKeys())
+	if(GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
-		if(!ParanoidEventsBatches.IsValidIndex(ParanoidEventsIndex))
+		for (auto KeyToUnlock : KeysToUnlock)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Paranoid event is null"));
+			IKeyHolderActor::Execute_AddKeyToActor(GameInstance, KeyToUnlock);	
 		}
-		else
+		
+		if(CheckKeys(GameInstance))
 		{
-			for (auto ParanoidEvent : ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEvents)
+			if(!ParanoidEventsBatches.IsValidIndex(ParanoidEventsIndex))
 			{
-				if(ParanoidEvent != nullptr)
+				UE_LOG(LogTemp, Error, TEXT("Paranoid event is null"));
+			}
+			else
+			{
+				for (auto ParanoidEvent : ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEvents)
 				{
-					if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+					if(ParanoidEvent != nullptr)
 					{
-						ParanoidEvent->TryInvokeEvent();
+						if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+						{
+							ParanoidEvent->TryInvokeEvent();
+						}
 					}
 				}
-			}
 
-			for (auto EventName :  ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEventsNames)
-			{
-				GameInstance->CallEvents(EventName);
-			}
-		
-			UObject* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-		
-			if(PlayerCharacter != nullptr &&  PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
-			{
-				for (auto KeyToUnlock : KeysToUnlock)
+				for (auto EventName :  ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEventsNames)
 				{
-					IKeyHolderActor::Execute_AddKeyToActor(PlayerCharacter, KeyToUnlock);	
+					GameInstance->CallEvents(EventName);
+				}
+				
+				for (auto ConstEvent :  ParanoidEventsBatches[ParanoidEventsIndex].ConstParanoidEvents)
+				{
+					GameInstance->CallConstEvents(ConstEvent);
 				}
 			}
+			OnChangeState();
+			ParanoidEventsIndex++;
 		}
-		OnChangeState();
-		ParanoidEventsIndex++;
 	}
 }
 
-bool ABatchedParanoidEventDispatcher::CheckKeys()
+bool ABatchedParanoidEventDispatcher::CheckKeys(UGameInstance* P_GameInstance)
 {
-	UE_LOG(LogTemp, Warning,TEXT("Checking KeysRequired in Paranoid Event Dispacher:"));
-
-	FString KeysLen= FString::FromInt(KeysRequired.Max());
-	UE_LOG(LogTemp, Error,TEXT("Keys required amount: %s"), *KeysLen);
-	if(KeysRequired.Max()==0)
+	if(P_GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
-		return true;
+		return IKeyHolderActor::Execute_ActorHasKeys(P_GameInstance, KeysRequired);
 	}
-	
-	UObject* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-
-	if(PlayerCharacter != nullptr && !PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
-	{
-		return true;
-	}
-	
-	const bool HasKeys = IKeyHolderActor::Execute_ActorHasKeys(PlayerCharacter, KeysRequired);
-	FString Has= HasKeys ? "Has" : "Has Not";
-	UE_LOG(LogTemp, Error,TEXT("Has keys: %s"), *Has);
-	return HasKeys;
+	return true;
 }
 
 void ABatchedParanoidEventDispatcher::KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse)

@@ -61,15 +61,22 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 {
 	UParanoidGameInstance* GameInstance = Cast<UParanoidGameInstance>(GetGameInstance());
 
-	if(CheckKeys())
+	if(CheckKeys(GameInstance))
 	{
-		UObject* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-
-		if(PlayerCharacter != nullptr && PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+		if(GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 		{
+			if(!IKeyHolderActor::Execute_ActorHasKeys(GameInstance, KeysRequired))
+			{
+				return;
+			}
+			
+			for (auto KeyToUnlock : KeysToUnlock)
+			{
+				IKeyHolderActor::Execute_AddKeyToActor(GameInstance, KeyToUnlock);	
+			}
 			if(ConsumeKeys)
 			{
-				IKeyHolderActor::Execute_ConsumeKeysFromActor(PlayerCharacter, KeysRequired);
+				IKeyHolderActor::Execute_ConsumeKeysFromActor(GameInstance, KeysRequired);
 			}
 		}
 		
@@ -88,39 +95,22 @@ void AParanoidEventDispatcher::DispatchParanoidEvents()
 		{
 			GameInstance->CallEvents(EventName);
 		}
-		
-		if(PlayerCharacter != nullptr && PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
+		for (auto ConstEvent :ConstParanoidEvents)
 		{
-			for (auto KeyToUnlock : KeysToUnlock)
-			{
-				IKeyHolderActor::Execute_AddKeyToActor(PlayerCharacter, KeyToUnlock);	
-			}
+			GameInstance->CallConstEvents(ConstEvent);
 		}
 	}
 }
 
-bool AParanoidEventDispatcher::CheckKeys()
+bool AParanoidEventDispatcher::CheckKeys(UGameInstance* P_GameInstance)
 {
-	UE_LOG(LogTemp, Warning,TEXT("Checking KeysRequired in Paranoid Event Dispacher:"));
-
-	FString KeysLen= FString::FromInt(KeysRequired.Max());
-	UE_LOG(LogTemp, Error,TEXT("Keys required amount: %s"), *KeysLen);
-	if(KeysRequired.Max()==0)
+	if(P_GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
-		return true;
+		UE_LOG(LogTemp,Warning,TEXT("implements"));
+		return IKeyHolderActor::Execute_ActorHasKeys(P_GameInstance, KeysRequired);
 	}
-
-	//Obtener al player character
-	UObject* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	// Veo si tiene el componente de llaves
-	if(PlayerCharacter != nullptr && !PlayerCharacter->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
-	{
-		return true;
-	}
-	const bool HasKeys = IKeyHolderActor::Execute_ActorHasKeys(PlayerCharacter, KeysRequired);
-	FString Has= HasKeys ? "Has" : "Has Not";
-	UE_LOG(LogTemp, Error,TEXT("Has keys: %s"), *Has);
-	return HasKeys;
+	UE_LOG(LogTemp,Error,TEXT("Dosent implement"));
+	return true;
 }
 
 void AParanoidEventDispatcher::KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse)

@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 
 #include "FParanoidEventsBatch.generated.h"
+
+enum class EConstPE : uint8;
+
 USTRUCT(BlueprintType)
 struct FParanoidEventsBatch
 {
@@ -15,4 +18,7 @@ struct FParanoidEventsBatch
 
 	UPROPERTY(EditAnywhere)
 	TArray<FName> ParanoidEventsNames;
+
+	UPROPERTY(EditAnywhere)
+	TArray<EConstPE> ConstParanoidEvents;
 };

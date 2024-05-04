@@ -22,7 +22,8 @@ public:
 	class UCameraComponent* CameraComp = nullptr;
 
 	class UItemHolderComponent* ItemHolder;
-	
+
+	UFUNCTION(BlueprintCallable)
 	void Interact();
 	bool InteractableReached(FHitResult& OutHitResult);
 };

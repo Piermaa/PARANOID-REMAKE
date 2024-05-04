@@ -36,8 +36,6 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "Paranoid Event")
 	bool InvokeOnce;
-	UPROPERTY(EditAnywhere, Category = "Paranoid Event | Keys")
-	TArray<FName> KeysRequired;
 	
 	bool Invoked=false;
 
@@ -53,5 +51,4 @@ public:
 	UFUNCTION(Blueprintable)
 	void InvokeEventByName(FName EventName);
 
-	bool CheckForKeys();
 };

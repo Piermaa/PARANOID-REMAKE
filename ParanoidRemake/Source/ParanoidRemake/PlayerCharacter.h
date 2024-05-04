@@ -10,7 +10,7 @@
 class UInputMappingContext;
 
 UCLASS()
-class PARANOIDREMAKE_API APlayerCharacter : public ACharacter, public IKeyHolderActor
+class PARANOIDREMAKE_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -64,10 +64,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enhanced Input")
 	UInputAction* RunInput;
 
-	virtual TSet<FName> GetKeysFromActor_Implementation() override;
-	virtual void AddKeyToActor_Implementation(FName NewKey) override;
-	virtual void ConsumeKeysFromActor_Implementation(const TArray<FName>& KeysToConsume) override;
-	virtual bool ActorHasKeys_Implementation(const TArray<FName>& KeysToCheck) override;
 private:
 
 	// ##################

@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EConstPE.h"
 #include "Components/StaticMeshComponent.h"
 #include "ItemHolderComponent.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PARANOIDREMAKE_API UItemHolderComponent : public UStaticMeshComponent
@@ -15,6 +15,10 @@ class PARANOIDREMAKE_API UItemHolderComponent : public UStaticMeshComponent
 public:	
 	// Sets default values for this component's properties
 	UItemHolderComponent();
-
+	virtual void BeginPlay() override;
 	void AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMaterialInterface*> StaticMeshMaterials);
+
+	UFUNCTION()
+	void ClearItemListener(EConstPE ConstEvent);
+	void ClearItem();
 };

@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "ParanoidEventDispatcher.generated.h"
 
+
+enum class EConstPE:uint8;
+
 UCLASS()
 class AParanoidEventDispatcher : public AActor, public IKeyLockedActorInterface, public IKeyUnlockerActor
 {
@@ -15,7 +18,6 @@ public:
 	///////////////// UE5 //////////////////
 	AParanoidEventDispatcher();
 	virtual void OnConstruction(const FTransform& Transform) override;
-	
 	////////////////////////////////////////////
 	////////////// UPROPERTIES ////////////////
 	///////////////////////////////////////////
@@ -35,7 +37,8 @@ public:
 	TArray<class AParanoidEvent*> ParanoidEvents;
 	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
 	TArray<FName> ParanoidEventsNames;
-
+	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
+	TArray<EConstPE> ConstParanoidEvents;
 	//////////// Keys Interface //////////////
 	UPROPERTY(EditAnywhere, Category = "Keys")
 	TArray<FName> KeysRequired = TArray<FName>();
@@ -43,7 +46,7 @@ public:
 	bool ConsumeKeys = true;
 	UPROPERTY(EditAnywhere, Category = "Keys")
 	TArray<FName> KeysToUnlock = TArray<FName>();
-
+		
 	////////////////////////////////////////////
 	/////////////// UFUNCTION /////////////////
 	///////////////////////////////////////////
@@ -51,7 +54,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DispatchParanoidEvents();
 	UFUNCTION(BlueprintCallable)
-	bool CheckKeys();
+	bool CheckKeys(UGameInstance* P_GameInstance);
 
 	//////////// Keys Interface //////////////
 	UFUNCTION(BlueprintCallable)

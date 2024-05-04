@@ -5,8 +5,6 @@
 #include "ParanoidGameInstance.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/BillboardComponent.h"
-#include "GameFramework/Character.h"
-#include "Kismet/GameplayStatics.h"
 
 AParanoidEvent::AParanoidEvent()
 {
@@ -63,21 +61,10 @@ void AParanoidEvent::InvokeEventByName(FName EventName)
 	}
 }
 
-bool AParanoidEvent::CheckForKeys()
-{
-	UObject* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
-	if(Player != nullptr && Player->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
-	{
-		return IKeyHolderActor::Execute_ActorHasKeys(UGameplayStatics::GetPlayerCharacter(GetWorld() ,0), KeysRequired);
-	}
-	return false;
-	
-}
 
 void AParanoidEvent::TryInvokeEvent_Implementation()
 {
-	if(CheckForKeys())
-	{
+	
 		if(InvokeOnce)
 		{
 			if(!Invoked)
@@ -90,7 +77,7 @@ void AParanoidEvent::TryInvokeEvent_Implementation()
 		{
 			InvokeEvent();
 		}
-	}
+	
 }
 
 void AParanoidEvent::InvokeEvent_Implementation()

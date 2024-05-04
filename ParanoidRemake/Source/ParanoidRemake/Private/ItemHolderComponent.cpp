@@ -3,14 +3,21 @@
 
 #include "ItemHolderComponent.h"
 
-// Sets default values for this component's properties
+#include "EConstPE.h"
+#include "ParanoidGameInstance.h"
+
 UItemHolderComponent::UItemHolderComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+}
+
+void UItemHolderComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	Cast<UParanoidGameInstance>(GetOwner()->GetGameInstance())->OnConstantParanoidEvent.AddDynamic(
+		this,
+		&UItemHolderComponent::ClearItemListener
+	);
 }
 
 void UItemHolderComponent::AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMaterialInterface*> StaticMeshMaterials)
@@ -22,6 +29,23 @@ void UItemHolderComponent::AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMate
 		{
 			SetMaterial(i, StaticMeshMaterials[i]);
 		}
+	}
+}
+
+void UItemHolderComponent::ClearItemListener(EConstPE ConstPe)
+{
+	if(ConstPe == EConstPE::ClearHand)
+	{
+		ClearItem();
+	}
+}
+
+void UItemHolderComponent::ClearItem()
+{
+	SetStaticMesh(nullptr);
+	for (int i=0;i < GetMaterials().Max();i++)
+	{
+		SetMaterial(i, nullptr);
 	}
 }
 

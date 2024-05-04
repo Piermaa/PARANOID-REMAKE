@@ -53,7 +53,7 @@ public:
 	void DispatchParanoidEvents();
 
 	UFUNCTION(BlueprintCallable)
-	bool CheckKeys();
+	bool CheckKeys(UGameInstance* P_GameInstance);
 
 	UFUNCTION(BlueprintCallable)
 	virtual void KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse) override;
