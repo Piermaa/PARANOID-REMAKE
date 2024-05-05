@@ -20,10 +20,11 @@ public:
 	float InteractionDistance = 400.0f;
 	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* CameraComp = nullptr;
-
 	class UItemHolderComponent* ItemHolder;
 
 	UFUNCTION(BlueprintCallable)
 	void Interact();
 	bool InteractableReached(FHitResult& OutHitResult);
+	
+	void CallInteract(UObject* Object);
 };

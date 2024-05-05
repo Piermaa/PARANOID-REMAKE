@@ -21,49 +21,8 @@ void UInteractComponent::Interact()
 	
 	if (InteractableReached(HitResult))
 	{
-		AActor* HitActor = HitResult.GetActor();
-		UClass* ActorClass= HitActor->GetClass();
-
-		// Chequeo que no esté lockeado
-		UE_LOG(LogTemp,Warning, TEXT("Checkeo si esta bloqueado"))
-		if(ActorClass->ImplementsInterface(UKeyLockedActorInterface::StaticClass()))
-		{
-			UE_LOG(LogTemp,Error, TEXT("Esta bloqueado"))
-			TArray<FName> KeysRequired = TArray<FName>();
-			IKeyLockedActorInterface::Execute_KeysRequiredToUse(HitActor, KeysRequired);
-			
-			if(!(IKeyHolderActor::Execute_ActorHasKeys(GetWorld()->GetGameInstance(), KeysRequired)))
-			{
-				return;
-			}
-		}
-			
-		UE_LOG(LogTemp,Warning, TEXT("Checkeo si es interactuable direccional"))
-		if(ActorClass->ImplementsInterface(UDirectedInteractableInterface::StaticClass()))
-		{
-			IDirectedInteractableInterface::Execute_DirectionDependantInteract(HitActor, CameraComp->GetForwardVector());
-			UE_LOG(LogTemp,Error, TEXT("Es ii"))
-		}
-		UE_LOG(LogTemp,Warning, TEXT("Checkeo si es interactuable"))
-		// Si es interactuable:
-		if (ActorClass->ImplementsInterface(UInteractableInterface::StaticClass()))
-		{
-			IInteractableInterface::Execute_Interact(HitActor);
-
-			// Si se puede agarrar
-			if(ActorClass->ImplementsInterface(UPickupeableInterface::StaticClass()))
-			{
-				if(ItemHolder==nullptr)
-				{
-					ItemHolder = GetOwner()->GetComponentByClass<UItemHolderComponent>();
-					if(ItemHolder==nullptr) { return; }
-				}
-					
-				TArray<UMaterialInterface*> PickupeableMaterials = TArray<UMaterialInterface*>();
-				UStaticMesh* PickupeableMesh = IPickupeableInterface::Execute_Pickup(HitActor, PickupeableMaterials);
-				ItemHolder->AddHeldItem(PickupeableMesh, PickupeableMaterials);	
-			}
-		}
+		CallInteract(HitResult.GetComponent());
+		CallInteract(HitResult.GetActor());
 	}
 }
 
@@ -83,5 +42,50 @@ bool UInteractComponent::InteractableReached(FHitResult& OutHitResult)
 	Params.AddIgnoredActor(GetOwner());
 	return GetWorld()->LineTraceSingleByChannel(OutHitResult, Start, End, ECC_Visibility, Params);
 }
+
+void UInteractComponent::CallInteract(UObject* Object)
+{
+	UClass* ObjectClass = Object->GetClass();
+	UE_LOG(LogTemp,Warning, TEXT("Checkeo si esta bloqueado"))
+	if(ObjectClass->ImplementsInterface(UKeyLockedActorInterface::StaticClass()))
+	{
+		UE_LOG(LogTemp,Error, TEXT("Esta bloqueado"))
+		TArray<FName> KeysRequired = TArray<FName>();
+		IKeyLockedActorInterface::Execute_KeysRequiredToUse(Object, KeysRequired);
+			
+		if(!(IKeyHolderActor::Execute_ActorHasKeys(GetWorld()->GetGameInstance(), KeysRequired)))
+		{
+			return;
+		}
+	}
+			
+	UE_LOG(LogTemp,Warning, TEXT("Checkeo si es interactuable direccional"))
+	if(ObjectClass->ImplementsInterface(UDirectedInteractableInterface::StaticClass()))
+	{
+		IDirectedInteractableInterface::Execute_DirectionDependantInteract(Object, CameraComp->GetForwardVector());
+		UE_LOG(LogTemp,Error, TEXT("Es ii"))
+	}
+	UE_LOG(LogTemp,Warning, TEXT("Checkeo si es interactuable"))
+	// Si es interactuable:
+	if (ObjectClass->ImplementsInterface(UInteractableInterface::StaticClass()))
+	{
+		IInteractableInterface::Execute_Interact(Object);
+
+		// Si se puede agarrar
+		if(ObjectClass->ImplementsInterface(UPickupeableInterface::StaticClass()))
+		{
+			if(ItemHolder==nullptr)
+			{
+				ItemHolder = GetOwner()->GetComponentByClass<UItemHolderComponent>();
+				if(ItemHolder==nullptr) { return; }
+			}
+					
+			TArray<UMaterialInterface*> PickupeableMaterials = TArray<UMaterialInterface*>();
+			UStaticMesh* PickupeableMesh = IPickupeableInterface::Execute_Pickup(Object, PickupeableMaterials);
+			ItemHolder->AddHeldItem(PickupeableMesh, PickupeableMaterials);	
+		}
+	}
+}
+
 
 

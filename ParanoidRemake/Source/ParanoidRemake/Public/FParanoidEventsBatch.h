@@ -13,12 +13,21 @@ struct FParanoidEventsBatch
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<class AParanoidEvent*> ParanoidEvents;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FName> ParanoidEventsNames;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<EConstPE> ConstParanoidEvents;
+
+	// Default constructor
+	FParanoidEventsBatch()
+	{
+		// Ensure arrays are properly initialized
+		ParanoidEvents.Empty();
+		ParanoidEventsNames.Empty();
+		ConstParanoidEvents.Empty();
+	}
 };

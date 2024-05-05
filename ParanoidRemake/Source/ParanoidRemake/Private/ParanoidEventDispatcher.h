@@ -33,11 +33,11 @@ public:
 	FColor DebugLinesColor;
 
 	///////////////// Paranoid //////////////////
-	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Paranoid Events")
 	TArray<class AParanoidEvent*> ParanoidEvents;
-	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Paranoid Events")
 	TArray<FName> ParanoidEventsNames;
-	UPROPERTY(EditAnywhere, Category = "Paranoid Events")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Paranoid Events")
 	TArray<EConstPE> ConstParanoidEvents;
 	//////////// Keys Interface //////////////
 	UPROPERTY(EditAnywhere, Category = "Keys")
