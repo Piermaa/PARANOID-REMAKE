@@ -46,14 +46,17 @@ void AParanoidEventDispatcher::UpdateDebugSymbols_Implementation()
 				);
 		}
 
-		TextRenderComponent->Text=FText::FromString("");
-		FString ParanoidEventNamesListString="";
-		for (auto EventName : ParanoidEventsNames)
+		if(!ParanoidEventsNames.IsEmpty())
 		{
-			ParanoidEventNamesListString =  ParanoidEventNamesListString + EventName.ToString() + "\n";
-		}
+			TextRenderComponent->Text=FText::FromString("");
+			FString ParanoidEventNamesListString="";
+			for (auto EventName : ParanoidEventsNames)
+			{
+				ParanoidEventNamesListString =  ParanoidEventNamesListString + EventName.ToString() + "\n";
+			}
 
-		TextRenderComponent->Text=FText::FromString(ParanoidEventNamesListString);
+			TextRenderComponent->Text=FText::FromString(ParanoidEventNamesListString);
+		}
 	}
 }
 
