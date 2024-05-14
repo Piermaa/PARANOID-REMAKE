@@ -20,10 +20,11 @@ void UItemHolderComponent::BeginPlay()
 	);
 }
 
-void UItemHolderComponent::AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMaterialInterface*> StaticMeshMaterials)
+void UItemHolderComponent::AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMaterialInterface*> StaticMeshMaterials, FTransform Transform)
 {
 	if(GetStaticMesh()==nullptr)
 	{
+		SetRelativeTransform(Transform);
 		SetStaticMesh(ItemStaticMesh);
 		for (int i=0; i < StaticMeshMaterials.Max()-1; i++)
 		{

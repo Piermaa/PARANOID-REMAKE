@@ -79,10 +79,11 @@ void UInteractComponent::CallInteract(UObject* Object)
 				ItemHolder = GetOwner()->GetComponentByClass<UItemHolderComponent>();
 				if(ItemHolder==nullptr) { return; }
 			}
-					
+			
 			TArray<UMaterialInterface*> PickupeableMaterials = TArray<UMaterialInterface*>();
-			UStaticMesh* PickupeableMesh = IPickupeableInterface::Execute_Pickup(Object, PickupeableMaterials);
-			ItemHolder->AddHeldItem(PickupeableMesh, PickupeableMaterials);	
+			FTransform PickupTransform = FTransform();
+			UStaticMesh* PickupeableMesh = IPickupeableInterface::Execute_Pickup(Object, PickupeableMaterials, PickupTransform);
+			ItemHolder->AddHeldItem(PickupeableMesh, PickupeableMaterials, PickupTransform);	
 		}
 	}
 }

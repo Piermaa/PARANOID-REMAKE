@@ -16,7 +16,7 @@ public:
 	// Sets default values for this component's properties
 	UItemHolderComponent();
 	virtual void BeginPlay() override;
-	void AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMaterialInterface*> StaticMeshMaterials);
+	void AddHeldItem(UStaticMesh* ItemStaticMesh, TArray<UMaterialInterface*> StaticMeshMaterials, FTransform Transform);
 
 	UFUNCTION()
 	void ClearItemListener(EConstPE ConstEvent);
