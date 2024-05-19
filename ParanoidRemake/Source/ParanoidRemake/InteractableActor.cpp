@@ -3,6 +3,8 @@
 
 #include "InteractableActor.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 AInteractableActor::AInteractableActor()
 {
@@ -11,9 +13,12 @@ AInteractableActor::AInteractableActor()
 
 }
 
-
 void AInteractableActor::Interact_Implementation()
 {
+	if (OnInteractionSFX != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, OnInteractionSFX, GetActorLocation(), GetActorRotation());
+	}
 }
 
 

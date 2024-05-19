@@ -17,5 +17,8 @@ public:
 	AInteractableActor();
 
 public:
+	UPROPERTY(EditAnywhere, Category = "Interaction")
+	TObjectPtr<USoundBase> OnInteractionSFX;
+	
 	virtual void Interact_Implementation() override;
 };
