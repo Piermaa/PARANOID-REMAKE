@@ -22,10 +22,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debugging")
 	bool ShowDebugElements;
 
-	UPROPERTY(EditAnywhere="Debugging")
+	UPROPERTY(EditDefaultsOnly="Debugging")
 	class UBillboardComponent* BillboardComponent;
 	
-	UPROPERTY(EditAnywhere="Debugging")
+	UPROPERTY(EditDefaultsOnly="Debugging")
 	UStaticMeshComponent* StaticMeshComponent;
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Debugging")
