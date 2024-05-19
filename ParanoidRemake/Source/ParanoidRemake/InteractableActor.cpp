@@ -15,10 +15,6 @@ AInteractableActor::AInteractableActor()
 
 void AInteractableActor::Interact_Implementation()
 {
-	if (OnInteractionSFX != nullptr)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, OnInteractionSFX, GetActorLocation(), GetActorRotation());
-	}
 }
 
 
