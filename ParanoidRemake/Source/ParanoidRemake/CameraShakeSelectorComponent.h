@@ -33,13 +33,20 @@ public:
 	void Initialize(UCharacterMovementComponent* NewCharacterMovementComponent, 
 		AController* Controller,
 		URealisticRunningComponent* NewRealisticRunningComponent);
-
+	UFUNCTION(BlueprintCallable)
+	void SetOverrideCameraShake(TSubclassOf<UCameraShakeBase> NewCameraShake);
+	UFUNCTION(BlueprintCallable)
+	void ClearCameraShakeOverride();
 	UPROPERTY(EditAnywhere, Category = "Camera Shakes")
 	TSubclassOf<UCameraShakeBase> IdleCameraShake;
 	UPROPERTY(EditAnywhere, Category = "Camera Shakes")
 	TSubclassOf<UCameraShakeBase> WalkCameraShake;
 	UPROPERTY(EditAnywhere, Category = "Camera Shakes")
 	TSubclassOf<UCameraShakeBase> RunCameraShake;
+
+	
+	TSubclassOf<UCameraShakeBase> OverrideCameraShake;
+	bool HasOverride;
 
 private:
 	class UCharacterMovementComponent* CharacterMovementComponent;

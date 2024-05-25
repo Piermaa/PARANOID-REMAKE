@@ -34,6 +34,22 @@ void UCameraShakeSelectorComponent::SelectCameraShake() const
 {
 	if(PlayerController!=nullptr && RealisticRunningComponent != nullptr)
 	{
+		if(HasOverride)
+		{
+			if(OverrideCameraShake != nullptr)
+			{
+				PlayerController->ClientStartCameraShake(
+				OverrideCameraShake,
+				1,
+				ECameraShakePlaySpace::CameraLocal,
+				FRotator(0,0,0)
+				);
+			}
+			return;
+		}
+	
+
+		
 		float Velocity = CharacterMovementComponent->Velocity.Length();
 		float CurrentMaxVelocity=0;
 		float CameraShakeIntensity=1;
@@ -80,5 +96,16 @@ void UCameraShakeSelectorComponent::Initialize(
 	CharacterMovementComponent = NewCharacterMovementComponent;
 	PlayerController = Cast<APlayerController>(Controller);
 	RealisticRunningComponent = NewRealisticRunningComponent;
+}
+
+void UCameraShakeSelectorComponent::SetOverrideCameraShake(TSubclassOf<UCameraShakeBase> NewCameraShake)
+{
+	OverrideCameraShake = NewCameraShake;
+	HasOverride = true;
+}
+
+void UCameraShakeSelectorComponent::ClearCameraShakeOverride()
+{
+	HasOverride = false;
 }
 
