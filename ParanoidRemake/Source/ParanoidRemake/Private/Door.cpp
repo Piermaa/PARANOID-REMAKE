@@ -16,6 +16,7 @@ ADoor::ADoor()
 	BoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("My Box Component"));
 	BoxComp->InitBoxExtent(FVector(150, 100, 100));
 	BoxComp->SetCollisionProfileName("Trigger");
+	RootComponent= BoxComp;
 
 
 	ArrowComp = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
