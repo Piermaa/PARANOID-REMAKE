@@ -19,12 +19,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	float InteractionDistance = 400.0f;
 	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
+	bool DebugLine= false;
+	UPROPERTY(EditDefaultsOnly, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* CameraComp = nullptr;
 	class UItemHolderComponent* ItemHolder;
 
 	UFUNCTION(BlueprintCallable)
 	void Interact();
-	bool InteractableReached(FHitResult& OutHitResult);
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool InteractableReached(FHitResult& OutHitResult, bool DrawsDebugLine);
 	
 	void CallInteract(UObject* Object);
 };

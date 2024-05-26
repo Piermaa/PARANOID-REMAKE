@@ -19,14 +19,14 @@ void UInteractComponent::Interact()
 {
 	FHitResult HitResult;
 	
-	if (InteractableReached(HitResult))
+	if (InteractableReached(HitResult, DebugLine))
 	{
 		CallInteract(HitResult.GetComponent());
 		CallInteract(HitResult.GetActor());
 	}
 }
 
-bool UInteractComponent::InteractableReached(FHitResult& OutHitResult)
+bool UInteractComponent::InteractableReached(FHitResult& OutHitResult, bool DrawsDebugLine)
 {
 	if (CameraComp == nullptr)
 	{
@@ -38,7 +38,10 @@ bool UInteractComponent::InteractableReached(FHitResult& OutHitResult)
 	FVector Start = CameraComp->GetComponentLocation();
 	FVector End = Start + CameraComp->GetForwardVector() * InteractionDistance;
 	FCollisionQueryParams Params;
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 3, 0, 2);
+	if(DrawsDebugLine)
+	{
+		DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 3, 0, 2);
+	}
 	Params.AddIgnoredActor(GetOwner());
 	return GetWorld()->LineTraceSingleByChannel(OutHitResult, Start, End, ECC_Visibility, Params);
 }
