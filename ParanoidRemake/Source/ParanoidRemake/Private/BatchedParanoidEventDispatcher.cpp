@@ -69,7 +69,7 @@ void ABatchedParanoidEventDispatcher::UpdateDebugSymbols_Implementation()
 	}
 }
 
-void ABatchedParanoidEventDispatcher::DispatchParanoidEvents()
+void ABatchedParanoidEventDispatcher::TryCallParanoidEvents()
 {
 	UParanoidGameInstance* GameInstance = Cast<UParanoidGameInstance>(GetGameInstance());
 
@@ -82,35 +82,7 @@ void ABatchedParanoidEventDispatcher::DispatchParanoidEvents()
 		
 		if(CheckKeys(GameInstance))
 		{
-			if(!ParanoidEventsBatches.IsValidIndex(ParanoidEventsIndex))
-			{
-				UE_LOG(LogTemp, Error, TEXT("Paranoid event is null"));
-			}
-			else
-			{
-				for (auto ParanoidEvent : ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEvents)
-				{
-					if(ParanoidEvent != nullptr)
-					{
-						if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
-						{
-							ParanoidEvent->TryInvokeEvent();
-						}
-					}
-				}
-
-				for (auto EventName :  ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEventsNames)
-				{
-					GameInstance->CallEvents(EventName);
-				}
-				
-				for (auto ConstEvent :  ParanoidEventsBatches[ParanoidEventsIndex].ConstParanoidEvents)
-				{
-					GameInstance->CallConstEvents(ConstEvent);
-				}
-			}
-			OnChangeState();
-			ParanoidEventsIndex++;
+			CallParanoidEvents(GameInstance);
 		}
 	}
 }
@@ -119,9 +91,36 @@ bool ABatchedParanoidEventDispatcher::CheckKeys(UGameInstance* P_GameInstance)
 {
 	if(P_GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
-		return IKeyHolderActor::Execute_ActorHasKeys(P_GameInstance, KeysRequired);
+		return IKeyHolderActor::Execute_ActorHasKeys(P_GameInstance, KeysRequired) && ParanoidEventsBatches.IsValidIndex(ParanoidEventsIndex);
 	}
 	return true;
+}
+
+void ABatchedParanoidEventDispatcher::CallParanoidEvents(UParanoidGameInstance* P_GameInstance)
+{
+	for (auto ParanoidEvent : ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEvents)
+	{
+		if(ParanoidEvent != nullptr)
+		{
+			if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+			{
+				ParanoidEvent->TryInvokeEvent();
+			}
+		}
+	}
+
+	for (auto EventName :  ParanoidEventsBatches[ParanoidEventsIndex].ParanoidEventsNames)
+	{
+		P_GameInstance->CallEvents(EventName);
+	}
+				
+	for (auto ConstEvent :  ParanoidEventsBatches[ParanoidEventsIndex].ConstParanoidEvents)
+	{
+		P_GameInstance->CallConstEvents(ConstEvent);
+	}
+			
+	OnChangeState();
+	ParanoidEventsIndex++;
 }
 
 void ABatchedParanoidEventDispatcher::KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse)

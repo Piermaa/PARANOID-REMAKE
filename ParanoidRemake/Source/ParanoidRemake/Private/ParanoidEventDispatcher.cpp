@@ -5,8 +5,6 @@
 #include "ParanoidEventInterface.h"
 #include "ParanoidGameInstance.h"
 #include "Components/TextRenderComponent.h"
-#include "GameFramework/Character.h"
-#include "Kismet/GameplayStatics.h"
 // Sets default values
 AParanoidEventDispatcher::AParanoidEventDispatcher()
 {
@@ -60,48 +58,13 @@ void AParanoidEventDispatcher::UpdateDebugSymbols_Implementation()
 	}
 }
 
-void AParanoidEventDispatcher::DispatchParanoidEvents()
+void AParanoidEventDispatcher::TryDispatchParanoidEvents()
 {
 	UParanoidGameInstance* GameInstance = Cast<UParanoidGameInstance>(GetGameInstance());
 
 	if(CheckKeys(GameInstance))
 	{
-		if(GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
-		{
-			if(!IKeyHolderActor::Execute_ActorHasKeys(GameInstance, KeysRequired))
-			{
-				return;
-			}
-			
-			for (auto KeyToUnlock : KeysToUnlock)
-			{
-				IKeyHolderActor::Execute_AddKeyToActor(GameInstance, KeyToUnlock);	
-			}
-			if(ConsumeKeys)
-			{
-				IKeyHolderActor::Execute_ConsumeKeysFromActor(GameInstance, KeysRequired);
-			}
-		}
-		
-		for (auto ParanoidEvent : ParanoidEvents)
-		{
-			if(ParanoidEvent != nullptr)
-			{
-				if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
-				{
-					ParanoidEvent->TryInvokeEvent();
-				}
-			}
-		}
-
-		for (auto EventName : ParanoidEventsNames)
-		{
-			GameInstance->CallEvents(EventName);
-		}
-		for (auto ConstEvent :ConstParanoidEvents)
-		{
-			GameInstance->CallConstEvents(ConstEvent);
-		}
+		InvokeParanoidEvents(GameInstance);
 	}
 }
 
@@ -109,11 +72,64 @@ bool AParanoidEventDispatcher::CheckKeys(UGameInstance* P_GameInstance)
 {
 	if(P_GameInstance->GetClass()->ImplementsInterface(UKeyHolderActor::StaticClass()))
 	{
-		UE_LOG(LogTemp,Warning,TEXT("implements"));
 		return IKeyHolderActor::Execute_ActorHasKeys(P_GameInstance, KeysRequired);
 	}
-	UE_LOG(LogTemp,Error,TEXT("Dosent implement"));
 	return true;
+}
+
+void AParanoidEventDispatcher::InvokeParanoidEvents(UParanoidGameInstance* P_GameInstance)
+{
+	for (auto KeyToUnlock : KeysToUnlock)
+	{
+		IKeyHolderActor::Execute_AddKeyToActor(P_GameInstance, KeyToUnlock);	
+	}
+	if(ConsumeKeys)
+	{
+		IKeyHolderActor::Execute_ConsumeKeysFromActor(P_GameInstance, KeysRequired);
+	}
+		
+	for (auto ParanoidEvent : ParanoidEvents)
+	{
+		if(ParanoidEvent != nullptr)
+		{
+			if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+			{
+				ParanoidEvent->TryInvokeEvent();
+			}
+		}
+	}
+
+	for (auto EventName : ParanoidEventsNames)
+	{
+		P_GameInstance->CallEvents(EventName);
+	}
+	for (auto ConstEvent :ConstParanoidEvents)
+	{
+		P_GameInstance->CallConstEvents(ConstEvent);
+	}
+}
+
+void AParanoidEventDispatcher::InvokeBatch(UParanoidGameInstance* P_GameInstance, FParanoidEventsBatch BatchToInvoke)
+{
+	for (auto ParanoidEvent : BatchToInvoke.ParanoidEvents)
+	{
+		if(ParanoidEvent != nullptr)
+		{
+			if(ParanoidEvent->GetClass()->ImplementsInterface(UParanoidEventInterface::StaticClass()))
+			{
+				ParanoidEvent->TryInvokeEvent();
+			}
+		}
+	}
+
+	for (auto EventName : BatchToInvoke.ParanoidEventsNames)
+	{
+		P_GameInstance->CallEvents(EventName);
+	}
+	for (auto ConstEvent : BatchToInvoke.ConstParanoidEvents)
+	{
+		P_GameInstance->CallConstEvents(ConstEvent);
+	}
 }
 
 void AParanoidEventDispatcher::KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse)

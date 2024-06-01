@@ -4,9 +4,11 @@
 #include "KeyLockedActorInterface.h"
 #include "KeyUnlockerActor.h"
 #include "GameFramework/Actor.h"
+#include "Structs/FParanoidEventsBatch.h"
 #include "ParanoidEventDispatcher.generated.h"
 
 
+class UParanoidGameInstance;
 enum class EConstPE:uint8;
 
 UCLASS()
@@ -52,10 +54,13 @@ public:
 	///////////////////////////////////////////
 	
 	UFUNCTION(BlueprintCallable)
-	void DispatchParanoidEvents();
-	UFUNCTION(BlueprintCallable)
+	void TryDispatchParanoidEvents();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CheckKeys(UGameInstance* P_GameInstance);
-
+	UFUNCTION(BlueprintCallable)
+	void InvokeParanoidEvents(UParanoidGameInstance* P_GameInstance);
+	UFUNCTION(BlueprintCallable)
+	void InvokeBatch(UParanoidGameInstance* P_GameInstance, FParanoidEventsBatch BatchToInvoke);
 	//////////// Keys Interface //////////////
 	UFUNCTION(BlueprintCallable)
 	virtual void KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse) override;

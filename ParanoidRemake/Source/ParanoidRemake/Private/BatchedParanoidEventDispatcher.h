@@ -6,7 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "KeyLockedActorInterface.h"
 #include "KeyUnlockerActor.h"
-#include "FParanoidEventsBatch.h"
+#include "ParanoidGameInstance.h"
+#include "ParanoidRemake/Public/Structs/FParanoidEventsBatch.h"
 #include "BatchedParanoidEventDispatcher.generated.h"
 
 
@@ -48,12 +49,14 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "Keys")
 	TArray<FName> KeysToUnlock = TArray<FName>();
+
 	
 	UFUNCTION(BlueprintCallable)
-	void DispatchParanoidEvents();
-
-	UFUNCTION(BlueprintCallable)
+	void TryCallParanoidEvents();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CheckKeys(UGameInstance* P_GameInstance);
+	UFUNCTION(BlueprintCallable)
+	void CallParanoidEvents(UParanoidGameInstance* P_GameInstance);
 
 	UFUNCTION(BlueprintCallable)
 	virtual void KeysRequiredToUse_Implementation(TArray<FName>& KeysRequiredToUse) override;
