@@ -12,14 +12,17 @@
 #include "FootstepsPlayer.h"
 #include "InteractComponent.h"
 #include "ItemHolderComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 
 APlayerCharacter::APlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
+	SpringArmComponent->SetupAttachment(RootComponent);
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Player Camera"));
-	CameraComp->SetupAttachment(RootComponent);
+	CameraComp->SetupAttachment(SpringArmComponent);
 	CameraComp->bUsePawnControlRotation = true;
 
 	RealisticRunningComponent = CreateDefaultSubobject<URealisticRunningComponent>(TEXT("Realistic Runnning"));
