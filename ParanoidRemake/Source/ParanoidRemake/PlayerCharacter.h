@@ -92,7 +92,8 @@ private:
 	class UInteractComponent* InteractComponent;
 	
 	// ## Other ##
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	float CameraSensibility = 1;
 
 	FTimerHandle FixedUpdateHandle;
 
