@@ -14,6 +14,11 @@ void UParanoidGameInstance::CallConstEvents(EConstPE ConstEvent)
 	OnConstantParanoidEvent.Broadcast(ConstEvent);
 }
 
+void UParanoidGameInstance::ClearKeys()
+{
+	Keys.Empty();
+}
+
 TSet<FName> UParanoidGameInstance::GetKeysFromActor_Implementation()
 {
 	TSet<FName> KeysSet=TSet<FName>();
@@ -77,7 +82,11 @@ bool UParanoidGameInstance::ActorHasKeys_Implementation(const TArray<FName>& Key
 			return false;
 		}
 	}
-	
+
+	for (auto Key : Keys)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Keys: %s"), *Key.ToString());
+	}
 	return true;
 }
 

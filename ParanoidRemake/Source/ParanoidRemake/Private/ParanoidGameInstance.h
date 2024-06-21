@@ -27,7 +27,8 @@ public:
 	void CallEvents(FName EventName);
 	UFUNCTION(BlueprintCallable)
 	void CallConstEvents(EConstPE ConstEvent);
-	
+	UFUNCTION(BlueprintCallable)
+	void ClearKeys();
 public:
 	virtual TSet<FName> GetKeysFromActor_Implementation() override;
 	virtual void AddKeyToActor_Implementation(FName NewKey) override;
