@@ -7,7 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e20f6a6b-7103-4da3-b38d-002d5d747300" name="Changes" comment="" />
+    <list default="true" id="e20f6a6b-7103-4da3-b38d-002d5d747300" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ParanoidRemake.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ParanoidRemake.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/modelos/Custom/Pancho/Maniqui_pt/SM_Maniqui_Parado_Prueba.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/modelos/Custom/Pancho/Maniqui_pt/SM_Maniqui_Parado_Prueba.uasset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,62 +52,73 @@
 }</component>
   <component name="RunManager">
     <configuration name="ParanoidRemake" type="Uproject" factoryName="rider.uproject">
-      <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
-      <configuration_2>
+      <configuration_1>
         <option name="CONFIGURATION" value="DebugGame Editor" />
         <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="H:\Epic Games\UE_5.2\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
-        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\ParanoidRemake.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_1>
+      <configuration_2>
+        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\Binaries\Win64\ParanoidRemake-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_2>
       <configuration_3>
-        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="CONFIGURATION" value="Development Editor" />
         <option name="PLATFORM" value="Win64" />
-        <option name="EXECUTABLE_PATH" value="H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\Binaries\Win64\ParanoidRemake-Win64-DebugGame.exe" />
-        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="H:\Epic Games\UE_5.2\Engine\Binaries\Win64\UnrealEditor.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\ParanoidRemake.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_3>
       <configuration_4>
-        <option name="CONFIGURATION" value="Development Editor" />
+        <option name="CONFIGURATION" value="Development" />
         <option name="PLATFORM" value="Win64" />
-        <option name="EXECUTABLE_PATH" value="H:\Epic Games\UE_5.2\Engine\Binaries\Win64\UnrealEditor.exe" />
-        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\ParanoidRemake.uproject&quot;" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\Binaries\Win64\ParanoidRemake.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_4>
       <configuration_5>
-        <option name="CONFIGURATION" value="Development" />
+        <option name="CONFIGURATION" value="Shipping" />
         <option name="PLATFORM" value="Win64" />
-        <option name="EXECUTABLE_PATH" value="H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\Binaries\Win64\ParanoidRemake.exe" />
-        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\Binaries\Win64\ParanoidRemake-Win64-Shipping.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_5>
-      <configuration_6>
-        <option name="CONFIGURATION" value="Shipping" />
-        <option name="PLATFORM" value="Win64" />
-        <option name="EXECUTABLE_PATH" value="H:\0_Unreal_Projects\Paranoid\PARANOID-REMAKE\ParanoidRemake\Binaries\Win64\ParanoidRemake-Win64-Shipping.exe" />
-        <option name="WORKING_DIRECTORY" value="H:\Epic Games\UE_5.2" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
-        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
-        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
-      </configuration_6>
+      <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ParanoidRemake.uproject" />
+      <option name="AUTO_SELECT_PRIORITY" value="10010" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -120,6 +134,7 @@
       <updated>1718994525515</updated>
       <workItem from="1718994532083" duration="1707000" />
       <workItem from="1719199339034" duration="2682000" />
+      <workItem from="1719892928580" duration="1609000" />
     </task>
     <servers />
   </component>
