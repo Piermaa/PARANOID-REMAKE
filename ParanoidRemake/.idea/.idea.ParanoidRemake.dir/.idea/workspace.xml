@@ -7,7 +7,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e20f6a6b-7103-4da3-b38d-002d5d747300" name="Changes" comment="" />
+    <list default="true" id="e20f6a6b-7103-4da3-b38d-002d5d747300" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ParanoidRemake.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ParanoidRemake.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/Attenuation/SAtt_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/Attenuation/SAtt_Default.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Data/DT_Dialogues.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Data/DT_Dialogues.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Data/F_Dialogue.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Data/F_Dialogue.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/Escopofobia/L_Esco_Escenario.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Escopofobia/L_Esco_Escenario.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/Escopofobia/L_NewEscopofobia.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Escopofobia/L_NewEscopofobia.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_Blueprints/Actors/ParanoidEvents/PEs/BP_DialogueSoundPlayerPE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_Blueprints/Actors/ParanoidEvents/PEs/BP_DialogueSoundPlayerPE.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_Blueprints/StaticFuncs/BL_Dialogues.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_Blueprints/StaticFuncs/BL_Dialogues.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_Blueprints/Widgets/WBP_DialoguesManager.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_Blueprints/Widgets/WBP_DialoguesManager.uasset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,6 +144,7 @@
       <workItem from="1719892928580" duration="1609000" />
       <workItem from="1721067548536" duration="1269000" />
       <workItem from="1721450872675" duration="1369000" />
+      <workItem from="1721499719242" duration="672000" />
     </task>
     <servers />
   </component>
