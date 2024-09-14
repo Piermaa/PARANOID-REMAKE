@@ -24,4 +24,10 @@ class PARANOIDREMAKE_API IInteractableInterface
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
 	void Interact();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
+	void OnSelect(int32 Type);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
+	void OnDeselect();
 };

@@ -20,4 +20,10 @@ class PARANOIDREMAKE_API IDirectedInteractableInterface
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
 	void DirectionDependantInteract(FVector Direction);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
+	void OnSelect(int32 Type);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction") //BNE PERMITE QUE PUEDA SER LLAMADO E IMPLEMENTADO
+	void OnDeselect();
 };
