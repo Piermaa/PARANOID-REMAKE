@@ -32,6 +32,10 @@
 		{
 			"Name": "AudioModulation",
 			"Enabled": true
+		},
+		{
+			"Name": "OneSkyLocalizationService",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
