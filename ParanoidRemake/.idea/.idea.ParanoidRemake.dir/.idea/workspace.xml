@@ -8,11 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e20f6a6b-7103-4da3-b38d-002d5d747300" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ParanoidRemake.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ParanoidRemake.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/SoundPresets/Doors/MSP_SFX_Door_Close_Sqky.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SoundPresets/Doors/MSP_SFX_Door_Close_Sqky.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/SoundPresets/Doors/MSP_SFX_Door_Open_Sqky.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SoundPresets/Doors/MSP_SFX_Door_Open_Sqky.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/SoundPresets/Stingers/MSP_SFX_Stinger_Int2_DoorClose_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SoundPresets/Stingers/MSP_SFX_Stinger_Int2_DoorClose_02.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/WAV/_SFX/Doors/A_SFX_Door_Close.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/WAV/_SFX/Doors/A_SFX_Door_Open.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FinalLevelSequence.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FinalLevelSequence.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/Escopofobia/L_NewEscopofobia.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Escopofobia/L_NewEscopofobia.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Splash/EdSplash.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Splash/EdSplash.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Splash/Splash.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Splash/Splash.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ParanoidRemake.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ParanoidRemake.uproject" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,6 +145,7 @@
       <workItem from="1721499719242" duration="672000" />
       <workItem from="1725835029587" duration="986000" />
       <workItem from="1725838184910" duration="799000" />
+      <workItem from="1728443322946" duration="1383000" />
     </task>
     <servers />
   </component>
