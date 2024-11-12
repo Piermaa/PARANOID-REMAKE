@@ -27,7 +27,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Uproject.StalkingGaze.executor": "Run",
+    "Uproject.StalkingGaze.executor": "Debug",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
@@ -129,6 +129,7 @@
       <updated>1729544105081</updated>
       <workItem from="1729544107181" duration="1418000" />
       <workItem from="1731206598431" duration="828000" />
+      <workItem from="1731255839140" duration="3382000" />
     </task>
     <servers />
   </component>
