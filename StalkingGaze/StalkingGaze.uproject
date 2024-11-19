@@ -36,6 +36,10 @@
 		{
 			"Name": "OneSkyLocalizationService",
 			"Enabled": true
+		},
+		{
+			"Name": "GPULightmass",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
